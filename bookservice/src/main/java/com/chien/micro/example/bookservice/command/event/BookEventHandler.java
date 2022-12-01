@@ -16,6 +16,7 @@ public class BookEventHandler {
 	
 	@EventHandler
 	public void on(BookCreateEvent event) {
+		
 		Book book = new Book();
 		BeanUtils.copyProperties(event, book);
 		bookRepository.save(book);
