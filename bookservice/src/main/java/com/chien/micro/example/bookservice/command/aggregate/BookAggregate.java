@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 
 import com.chien.micro.example.bookservice.command.command.CreateBookCommand;
 import com.chien.micro.example.bookservice.command.event.BookCreateEvent;
+
 @Aggregate
 public class BookAggregate {
 	@AggregateIdentifier
@@ -16,19 +17,20 @@ public class BookAggregate {
 	private String name;
 	private String author;
 	private boolean isReady;
-	
-	public BookAggregate () {
-		
+
+	public BookAggregate() {
+
 	}
-	
+
 	@CommandHandler
-	public BookAggregate (CreateBookCommand createBookCommand) {
+	public BookAggregate(CreateBookCommand createBookCommand) {
 		BookCreateEvent bookEvent = new BookCreateEvent();
 		BeanUtils.copyProperties(createBookCommand, bookEvent);
 		AggregateLifecycle.apply(bookEvent);
 	}
-	@EventSourcingHandler 
-	public void on (BookCreateEvent event) {
+
+	@EventSourcingHandler
+	public void on(BookCreateEvent event) {
 		this.bookId = event.getBookId();
 		this.author = event.getAuthor();
 		this.isReady = event.isReady();
