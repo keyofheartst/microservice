@@ -21,10 +21,7 @@ public class BookCommandController {
 
 	@PostMapping
 	public String addBook(@RequestBody BookRequestModel model) {
-		CreateBookCommand book = new CreateBookCommand(
-				UUID.randomUUID().toString(),
-				model.getName(),
-				model.getAuthor(),
+		CreateBookCommand book = new CreateBookCommand(UUID.randomUUID().toString(), model.getName(), model.getAuthor(),
 				true);
 		commandGateway.sendAndWait(book);
 		return "Add book successfully";
